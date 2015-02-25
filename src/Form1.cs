@@ -19,6 +19,8 @@ namespace CSGO_Buy_Bind_Generator
             InitializeComponent();
         }
 
+        //Too lazy to remove global variables at this point.
+        //Dont get angry at me.
         string weapon = "";
         string key = "";
         string output = "";
