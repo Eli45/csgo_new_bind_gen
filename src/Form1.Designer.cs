@@ -390,7 +390,6 @@
             this.lsbEquipment.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
             this.lsbEquipment.Size = new System.Drawing.Size(120, 95);
             this.lsbEquipment.TabIndex = 48;
-            this.lsbEquipment.SelectedIndexChanged += new System.EventHandler(this.lsbEquipment_SelectedIndexChanged);
             // 
             // lsbGrenade
             // 

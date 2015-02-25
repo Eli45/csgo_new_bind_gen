@@ -34,7 +34,8 @@ namespace CSGO_Buy_Bind_Generator
             old_selected_count = lsbGrenade.SelectedIndices.Count;
         }
 
-        public static void update_combo_boxes(Array a, ComboBox c)  {
+        public static void update_combo_boxes(Array a, ComboBox c)
+        {
             foreach (var item in a)
             {
                 c.Items.Add(item);
@@ -95,20 +96,22 @@ namespace CSGO_Buy_Bind_Generator
         { 
             "",
             "buy hkp2000",
-            "buybuyelite",
+            "buy elite",
             "buy p250",
             "buy fn57",
             "buy deagle"
         };
 
-        private static string[] possible_grenade_binds = new string[5]  {
+        private static string[] possible_grenade_binds = new string[5]
+        {
             "buy decoy",
             "buy smokegrenade",
             "buy flashbang",
             "buy hegrenade",
             "buy incgrenade"
         };
-        private static string[] possible_equipment_binds = new string[4]    {
+        private static string[] possible_equipment_binds = new string[4]
+        {
             "buy vest",
             "buy vesthelm",
             "buy defuser",
@@ -216,7 +219,7 @@ namespace CSGO_Buy_Bind_Generator
 
         //Numpad buttons
 
-        private void displayOutput(string s)
+        private bool displayOutput(string s)
         {
             weapon = s;
             if (key != "" && weapon != "")
@@ -258,6 +261,8 @@ namespace CSGO_Buy_Bind_Generator
                 {
                     txtOutput.Text = txtOutput.Text + "" + output + "\r\n";
                 }
+                //operation successful.
+                return true;
             }
             else
             {
@@ -265,6 +270,8 @@ namespace CSGO_Buy_Bind_Generator
                 if (key == "" && weapon != "") { throwError("Error: key not selected."); }
                 else if (weapon == "" && key != "") { throwError("Error: weapon not selected."); }
                 else { throwError("Error: weapon and key not selected."); }
+                //operation failure.
+                return false;
             }
         }
 
@@ -274,14 +281,18 @@ namespace CSGO_Buy_Bind_Generator
             string output = null;
 
             output = get_outputs();
-            displayOutput(output);
+            bool succeeded = displayOutput(output);
 
-            resetBindButtons();
-            reset_drops();
-            reset_lists();
+            //Only reset our input options if they are successfully entered.
+            if (succeeded)
+            {
+                resetBindButtons();
+                reset_drops();
+                reset_lists();
+                weapon = "";
+                key = "";
+            }
 
-            weapon = "";
-            key = "";
         }
 
         private void reset_drops()
@@ -299,44 +310,22 @@ namespace CSGO_Buy_Bind_Generator
         {
             string local_output;
 
-            local_output = get_selected_values_drop_prim();
-            local_output = local_output + get_selected_values_drop_second();
+            local_output = get_selected_values_dropdown(drpPrimary, possible_weapons_primary_binds);
+            local_output = local_output + get_selected_values_dropdown(drpSecondary, possible_weapons_secondary_binds);
             local_output = local_output + iterateListBoxEquipment();
             local_output = local_output + iterateListBoxGrenades();
 
             return local_output;
         }
 
-        private string get_selected_values_drop_prim() 
+        private string get_selected_values_dropdown(ComboBox drop, string[] corresponding)
         {
-            try //Nevermind it does work.
+            try
             {
-                if ((string)possible_weapons_primary_binds[drpPrimary.SelectedIndex] == "")
-                {
+                if ((string)corresponding[drop.SelectedIndex] == "")
                     return "";
-                }
                 else
-                {
-                    return (string)possible_weapons_primary_binds[drpPrimary.SelectedIndex] + "; ";     //get primary weapon
-                }
-            }
-            catch (IndexOutOfRangeException)
-            {
-                return "";
-            }
-        }
-        private string get_selected_values_drop_second() 
-        {
-            try 
-            {
-                if ((string)possible_weapons_secondary_binds[drpSecondary.SelectedIndex] == "")
-                {
-                    return "";
-                }
-                else
-                {
-                    return (string)possible_weapons_secondary_binds[drpSecondary.SelectedIndex] + "; ";   //get secondary weapon.
-                }
+                    return (string)corresponding[drop.SelectedIndex] + "; ";
             }
             catch (IndexOutOfRangeException)
             {
@@ -544,7 +533,7 @@ namespace CSGO_Buy_Bind_Generator
             try
             {
                 string name_of_item;
-                int tracker = 1;    // TODO Should this start at 1 or 0?
+                int tracker = 1;
                 bool has_flash = false;
 
                 if (lsbGrenade.SelectedItems.Count <= 0)
@@ -585,32 +574,7 @@ namespace CSGO_Buy_Bind_Generator
                 //I don't think there is any problems with the above code but you know how it is.
                 Debug.WriteLine("Something unexpected has happened. See line: <487{Hardcoded could be different now}>.");
             }
-        }
-
-
-        private void lsbEquipment_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            List<int> array_of_indices = new List<int> ( );
-            try
-            {
-                foreach (Object selecteditem in lsbGrenade.SelectedItems)
-                {
-                    int index = lsbGrenade.Items.IndexOf(selecteditem);
-                    array_of_indices.Add(index);    //add each selected index to an array.
-                }
-                foreach (int Index in array_of_indices)
-                {
-                    Debug.WriteLine(Index);
-                }
-                Debug.WriteLine(array_of_indices);
-            }
-            catch
-            {
-                //This is just for safety.
-                //I don't think there is any problems with the above code but you know how it is.
-                Debug.WriteLine("Something unexpected has happened. See line: <512{Hardcoded could be different now}>.");
-            }
-        }
+        } 
 
         private void radFlashbangTwo_CheckedChanged(object sender, EventArgs e)
         {
