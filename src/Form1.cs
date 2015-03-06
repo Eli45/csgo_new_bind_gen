@@ -21,9 +21,7 @@ namespace CSGO_Buy_Bind_Generator
 
         //Too lazy to remove global variables at this point.
         //Dont get angry at me.
-        string weapon = "";
         string key = "";
-        string output = "";
         int old_selected_count;
         bool isChecked;
 
@@ -223,7 +221,8 @@ namespace CSGO_Buy_Bind_Generator
 
         private bool displayOutput(string s)
         {
-            weapon = s;
+            string weapon = s;
+            string output;
             if (key != "" && weapon != "")
             {
                 output = "bind \"" + key + "\"" + " \"" + weapon + "\";";
@@ -291,7 +290,6 @@ namespace CSGO_Buy_Bind_Generator
                 resetBindButtons();
                 reset_drops();
                 reset_lists();
-                weapon = "";
                 key = "";
             }
 
