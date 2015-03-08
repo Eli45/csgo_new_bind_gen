@@ -34,7 +34,7 @@ namespace CSGO_Buy_Bind_Generator
             old_selected_count = lsbGrenade.SelectedIndices.Count;
         }
 
-        public static void update_combo_boxes(Array a, ComboBox c)
+        private static void update_combo_boxes(Array a, ComboBox c)
         {
             foreach (var item in a)
             {
@@ -42,7 +42,7 @@ namespace CSGO_Buy_Bind_Generator
             }
         }
 
-        public static string[] possible_weapons_primary = new string[17]   
+        private static string[] possible_weapons_primary = new string[17]   
         {
             "None",
             "AK47/M4A4/M4A1-S",
@@ -83,7 +83,7 @@ namespace CSGO_Buy_Bind_Generator
             "buy m249"
         };
 
-        public static string[] possible_weapons_secondary = new string[6]
+        private static string[] possible_weapons_secondary = new string[6]
         { 
             "None",
             "Glock-18/USP-S/P2000",
@@ -282,10 +282,9 @@ namespace CSGO_Buy_Bind_Generator
             string output = null;
 
             output = get_outputs();
-            bool succeeded = displayOutput(output);
 
             //Only reset our input options if they are successfully entered.
-            if (succeeded)
+            if (displayOutput(output))
             {
                 resetBindButtons();
                 reset_drops();
