@@ -571,7 +571,7 @@ namespace CSGO_Buy_Bind_Generator
             {
                 //This is just for safety.
                 //I don't think there is any problems with the above code but you know how it is.
-                Debug.WriteLine("Something unexpected has happened. See line: <487{Hardcoded could be different now}>.");
+                Debug.WriteLine("Something unexpected has happened. See method lsbGrenade_SelectedIndexChanged.");
             }
         } 
 
