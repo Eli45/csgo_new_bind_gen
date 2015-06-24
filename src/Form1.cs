@@ -345,13 +345,9 @@ namespace CSGO_Buy_Bind_Generator
                     items.Add(index);
                 }
 
-                bool double_flash = false;
-
-                if (radFlashbangTwo.Checked)
-                {
-                    double_flash = true;
-                }
+                bool double_flash = radFlashbangTwo.Checked;
                 string names = "";
+                
                 if (possible_grenade_binds[items[0]] != "buy flashbang") 
                 { 
                     names = possible_grenade_binds[items[0]] + "; ";    //0 should ALWAYS exist in this scenario.
